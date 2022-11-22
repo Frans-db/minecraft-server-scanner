@@ -113,8 +113,9 @@ def print_minecraft_servers():
         description = data['description']
         if 'text' in description:
             description = description['text']
-            
+
         print(f'[{ip}] - {description}')
+    print(f'Saved {len(files)} servers')
 
 
 def main():
