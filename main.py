@@ -8,14 +8,20 @@ import json
 import argparse
 
 db = sqlite3.connect("db.db")
-# db.cursor().execute('DROP TABLE ips')
-# db.cursor().execute("""
-# CREATE TABLE ips (
-#     id INTEGER PRIMARY KEY AUTOINCREMENT,
-#     ip TEXT UNIQUE,
-#     scanned INTEGER DEFAULT 0
-# )
-# """)
+
+
+def create_tables():
+    db.cursor().execute("""
+    CREATE TABLE ips (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        ip TEXT UNIQUE,
+        scanned INTEGER DEFAULT 0
+    )
+    """)
+
+
+def drop_tables():
+    db.cursor().execute('DROP TABLE ips')
 
 
 class PingProtocol(ClientProtocol):
@@ -112,12 +118,17 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('mode')
     args = parser.parse_args()
+
     if args.mode == 'scan':
         scan_ips()
     elif args.mode == 'check_server':
         check_for_minecraft_server()
     elif args.mode == 'print':
         print_minecraft_servers()
+    elif args.mode == 'create':
+        create_tables()
+    elif args.mode == 'drop':
+        drop_tables()
 
 
 if __name__ == '__main__':
