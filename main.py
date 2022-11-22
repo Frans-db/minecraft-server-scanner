@@ -53,7 +53,7 @@ def load_ip_ranges(filename: str):
 def scan_ips():
     ips = load_ip_ranges('./data/ip_ranges/hetzner.txt')
     for i, ip_range in enumerate(ips):
-        print(f'[{i:2}]: Range: {ip_range}')
+        print(f'[{i:2}/{len(ips)}]: Range: {ip_range}')
         if os.path.isfile(f'./data/scans/result_{i}.txt'):
             continue
         ip_range_results = []
