@@ -110,7 +110,10 @@ def print_minecraft_servers():
         with open(f'./data/servers/{filename}') as f:
             data = json.load(f)
         ip = {filename[:-5]}
-        description = data['description']['text']
+        description = data['description']
+        if 'text' in description:
+            description = description['text']
+            
         print(f'[{ip}] - {description}')
 
 
