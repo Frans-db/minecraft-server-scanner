@@ -27,15 +27,13 @@ def drop_tables():
 class PingProtocol(ClientProtocol):
     def status_response(self, data):
         ip = self.transport.getPeer().host
-        copied_data = {}
 
         for k, v in sorted(data.items()):
             if k != "favicon":
                 print('%s --> %s' % (k, v))
-                copied_data[k] = v
 
         with open(f'./data/servers/{ip}.json', 'w+') as f:
-            json.dump(copied_data, f)
+            json.dump(data, f)
 
         reactor.stop()
 
