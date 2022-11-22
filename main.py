@@ -72,7 +72,7 @@ def scan_ips():
         string_result = '\n'.join(ip_range_results)
         with open(f'./data/scans/result_{i}.txt', 'w+') as f:
             f.write(string_result)
-        insert_file_into_database(f'./data/scans/result_{i}.txt')
+        insert_file_into_database(f'result_{i}.txt')
 
 
 def insert_files_into_database():
