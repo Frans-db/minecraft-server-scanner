@@ -120,6 +120,48 @@ def print_minecraft_servers():
     print(f'Saved {len(files)} servers')
 
 
+def servers_to_html():
+    files = os.listdir('./data/servers')
+    rows = ''
+    for filename in files:
+        ip = filename[:-5]
+        with open(f'./data/servers/{filename}') as f:
+            data = json.load(f)
+
+        if 'favicon' not in data:
+            continue
+        favicon = data['favicon']
+        rows += f'''
+        <tr>
+            <td><img src="{favicon}"/></td>
+            <td>{ip}</td>            
+        </tr>
+        '''
+    with open('index.html', 'w+') as f:
+        f.write(f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr style="font-weight: 900">
+                <td>Icon</td>
+                <td>Ip</td>
+            </tr>
+        </thead>
+        <tbody>
+            {rows}
+        </tbody>
+    </table>
+</body>
+</html>''')
+
+            
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('mode')
@@ -135,6 +177,8 @@ def main():
         create_tables()
     elif args.mode == 'drop':
         drop_tables()
+    elif args.mode == 'html':
+        servers_to_html()
 
 
 if __name__ == '__main__':

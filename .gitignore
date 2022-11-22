@@ -2,3 +2,5 @@ venv
 data
 db.db
 *.conf
+.DS_Store
+index.html
