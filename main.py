@@ -119,6 +119,14 @@ def print_minecraft_servers():
         print(f'[{ip}] - {description}')
     print(f'Saved {len(files)} servers')
 
+def parse_description(desc):
+    string = ''
+    if 'text' in desc:
+        string += desc['text']
+    if 'extra' in desc:
+        for extra in desc['extra']:
+            string += parse_description(extra)
+    return string
 
 def servers_to_html():
     files = os.listdir('./data/servers')
@@ -131,10 +139,12 @@ def servers_to_html():
         if 'favicon' not in data:
             continue
         favicon = data['favicon']
+        description = data['description']
         rows += f'''
         <tr>
             <td><img src="{favicon}"/></td>
             <td>{ip}</td>            
+            <td>{parse_description(description)}</td>            
         </tr>
         '''
     with open('index.html', 'w+') as f:
@@ -152,6 +162,7 @@ def servers_to_html():
             <tr style="font-weight: 900">
                 <td>Icon</td>
                 <td>Ip</td>
+                <td>Description</td>
             </tr>
         </thead>
         <tbody>
