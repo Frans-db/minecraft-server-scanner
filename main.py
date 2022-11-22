@@ -111,9 +111,13 @@ def print_minecraft_servers():
             data = json.load(f)
         ip = {filename[:-5]}
         description = data['description']
-        if 'text' in description:
-            description = description['text']
-
+        if 'text' in data['description']:
+            description = data['description']['text']
+        if 'extra' in data['description']:
+            for extra in data['description']['extra']:
+                description += extra['text']
+                
+            
         print(f'[{ip}] - {description}')
     print(f'Saved {len(files)} servers')
 
