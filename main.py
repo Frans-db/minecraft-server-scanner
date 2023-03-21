@@ -138,12 +138,25 @@ def servers_to_html():
 
         if 'favicon' not in data:
             continue
-        favicon = data['favicon']
+        if 'players' not in data:
+            continue
+        if 'max' not in data['players']:
+            continue
+        if data['players']['max'] != 50:
+            continue
+        if 'players' in data:
+            max = data['players']['max']
+            online = data['players']['online']
+        else:
+            max = '-'
+            online = '-'
+        favicon = data['favicon'] if 'favicon' in data else 'a'
         description = data['description']
         rows += f'''
         <tr>
             <td><img src="{favicon}"/></td>
             <td>{ip}</td>            
+            <td>{online}/{max}</td>            
             <td>{parse_description(description)}</td>            
         </tr>
         '''
@@ -162,6 +175,7 @@ def servers_to_html():
             <tr style="font-weight: 900">
                 <td>Icon</td>
                 <td>Ip</td>
+                <td>Online</td>
                 <td>Description</td>
             </tr>
         </thead>
